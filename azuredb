@@ -1,0 +1,10 @@
+
+CREATE TABLE [dbo].[fielddata_cdr](
+	[ID] [float] NULL,
+	[ASSETID] [nvarchar](255) NULL,
+	[WEEKENDING] [datetime] NULL,
+	[FREQUENCY] [nvarchar](255) NULL,
+	[MONITORINGTYPEID] [nvarchar](255) NULL,
+	[MONITORINGNAME] [nvarchar](255) NULL,
+	[STATUS] [nvarchar](255) NULL
+) ON [PRIMARY]
