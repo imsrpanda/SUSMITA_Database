@@ -1,0 +1,13 @@
+CREATE FUNCTION dbo.fn_TotalEmployee()
+RETURNS INT
+AS
+BEGIN
+
+DECLARE @Count INT
+
+SELECT @Count=COUNT(*)
+FROM Employee
+
+RETURN @Count
+
+END
