@@ -1,4 +1,4 @@
-name: SQL Deployment
+name: SQL Server CI/CD
 
 on:
   push:
@@ -6,15 +6,76 @@ on:
       - main
 
 jobs:
-
   Deploy:
-
     runs-on: windows-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Install sqlcmd
+        shell: powershell
+        run: |
+          choco install sqlserver-cmdlineutils -y
 
-    - name: Display Files
-      run: dir Database /s
+      - name: Deploy Tables
+        shell: powershell
+        run: |
+          sqlcmd -S $env:DB_SERVER `
+                 -d $env:DB_NAME `
+                 -U $env:DB_USERNAME `
+                 -P $env:DB_PASSWORD `
+                 -i Database/Tables/Employee.sql
+
+          sqlcmd -S $env:DB_SERVER `
+                 -d $env:DB_NAME `
+                 -U $env:DB_USERNAME `
+                 -P $env:DB_PASSWORD `
+                 -i Database/Tables/Department.sql
+        env:
+          DB_SERVER: ${{ secrets.DB_SERVER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Deploy Views
+        shell: powershell
+        run: |
+          sqlcmd -S $env:DB_SERVER `
+                 -d $env:DB_NAME `
+                 -U $env:DB_USERNAME `
+                 -P $env:DB_PASSWORD `
+                 -i Database/Views/vwEmployee.sql
+        env:
+          DB_SERVER: ${{ secrets.DB_SERVER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Deploy Stored Procedures
+        shell: powershell
+        run: |
+          sqlcmd -S $env:DB_SERVER `
+                 -d $env:DB_NAME `
+                 -U $env:DB_USERNAME `
+                 -P $env:DB_PASSWORD `
+                 -i Database/StoredProcedures/usp_GetEmployee.sql
+        env:
+          DB_SERVER: ${{ secrets.DB_SERVER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Deploy Functions
+        shell: powershell
+        run: |
+          sqlcmd -S $env:DB_SERVER `
+                 -d $env:DB_NAME `
+                 -U $env:DB_USERNAME `
+                 -P $env:DB_PASSWORD `
+                 -i Database/Functions/fn_TotalEmployee.sql
+        env:
+          DB_SERVER: ${{ secrets.DB_SERVER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
