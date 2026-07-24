@@ -5,6 +5,6 @@ CREATE TABLE dbo.Employee
     LastName NVARCHAR(100),
     Email NVARCHAR(200),
     Salary DECIMAL(18,2),
-    PhoneNumber VARCHAR(10)
+    PhoneNumber VARCHAR(12)
     CreatedDate DATETIME DEFAULT GETDATE()
 );
