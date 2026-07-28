@@ -21,12 +21,6 @@ jobs:
       - name: Deploy Script Tables
         shell: powershell
         run: |
-          sqlcmd -b -S $env:DB_SERVER `
-           -d $env:DB_NAME `
-           -U $env:DB_USERNAME `
-           -P $env:DB_PASSWORD `
-           -i Database/Scripts/DeploymentHistory.sql
-
     sqlcmd -b -S $env:DB_SERVER `
            -d $env:DB_NAME `
            -U $env:DB_USERNAME `
