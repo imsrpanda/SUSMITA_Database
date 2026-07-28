@@ -18,20 +18,32 @@ jobs:
         run: |
           choco install sqlserver-cmdlineutils -y
 
-      - name: Deploy Tables
+      - name: Deploy Script Tables
         shell: powershell
         run: |
           sqlcmd -b -S $env:DB_SERVER `
-                 -d $env:DB_NAME `
-                 -U $env:DB_USERNAME `
-                 -P $env:DB_PASSWORD `
-                 -i Database/Tables/Employee.sql
+           -d $env:DB_NAME `
+           -U $env:DB_USERNAME `
+           -P $env:DB_PASSWORD `
+           -i Database/Scripts/DeploymentHistory.sql
 
-          sqlcmd -b -S $env:DB_SERVER `
-                 -d $env:DB_NAME `
-                 -U $env:DB_USERNAME `
-                 -P $env:DB_PASSWORD `
-                 -i Database/Tables/Department.sql
+    sqlcmd -b -S $env:DB_SERVER `
+           -d $env:DB_NAME `
+           -U $env:DB_USERNAME `
+           -P $env:DB_PASSWORD `
+           -i Database/Tables/Employee.sql
+
+    sqlcmd -b -S $env:DB_SERVER `
+           -d $env:DB_NAME `
+           -U $env:DB_USERNAME `
+           -P $env:DB_PASSWORD `
+           -i Database/Tables/Department.sql
+
+    sqlcmd -b -S $env:DB_SERVER `
+           -d $env:DB_NAME `
+           -U $env:DB_USERNAME `
+           -P $env:DB_PASSWORD `
+           -i Database/Tables/AlterEmployee.sql
         env:
           DB_SERVER: ${{ secrets.DB_SERVER }}
           DB_NAME: ${{ secrets.DB_NAME }}
