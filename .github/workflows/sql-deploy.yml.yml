@@ -21,13 +21,15 @@ jobs:
       - name: Deploy Tables
         shell: powershell
         run: |
-          sqlcmd -S $env:DB_SERVER `
+          sqlcmd -b -S $env:DB_SERVER `
+		 -S $env:DB_SERVER `
                  -d $env:DB_NAME `
                  -U $env:DB_USERNAME `
                  -P $env:DB_PASSWORD `
                  -i Database/Tables/Employee.sql
 
-          sqlcmd -S $env:DB_SERVER `
+          sqlcmd -b -S $env:DB_SERVER `
+		 -S $env:DB_SERVER `
                  -d $env:DB_NAME `
                  -U $env:DB_USERNAME `
                  -P $env:DB_PASSWORD `
