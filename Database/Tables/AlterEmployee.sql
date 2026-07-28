@@ -1,4 +1,4 @@
-IF COL_LENGTH('dbo.Employee', 'PhoneNumber') IS NULL
+IF COL_LENGTH('dbo.Employee', 'salary') IS NULL
 BEGIN
 ALTER TABLE dbo.Employee
 ADD PhoneNumber VARCHAR(20);
